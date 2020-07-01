@@ -1,0 +1,124 @@
+
+{% extends '_homebase.html' %}
+{% block booking %}
+    <script>
+      $( function() {
+        $( "#datepicker1" ).datepicker();
+      } );
+      $( function() {
+        $( "#datepicker2" ).datepicker();
+      } );
+      </script>
+      <div class="container">
+
+      </div>
+
+
+      <div class="container" style="padding-top: 100px;">
+        <form  id="form1"  method="GET">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                <label for="People">Number of people</label>
+                {% if people == None %}
+                    <input name="people" type="text" class="form-control " id="people" placeholder="Enter numbers...">
+                {% else %}
+                    <input name="people" type="text" class="form-control " id="people" value="{{people}}">
+                {% endif %}
+                </div>            
+                <div class="form-group col-md-2">
+                <label for="Room">Number of room</label>
+                {% if room == None %}
+                    <input name="room" type="text" class="form-control " id="room" placeholder="Enter numbers...">
+                {% else %}
+                    <input name="room" type="text" class="form-control " id="room" value="{{room}}">
+                {% endif %}
+                </div>
+                
+                <div class="form-group col-md-3">
+                <label for="District">District</label>
+                <select name = "district" id="district" class="form-control">
+                    {% if room == None %}
+                    <option selected>Choose...</option>
+                    {% else %}
+                    <option selected>{{district}}</option>
+                    {% endif %}
+                    <option value="District 1">District 1</option>
+                    <option value="District 2">District 2</option>
+                    <option value="District 3">District 3</option>
+                    <option value="District 4">District 4</option>
+                    <option value="District 5">District 5</option>
+                    <option value="District 6">District 6</option>
+                    <option value="District 7">District 7</option>
+                    <option value="District 8">District 8</option>
+                </select>
+                </div>
+            <div class="form-group col-md-2">
+                <label for="check-inDay">Check In day</label>
+                {% if checkinDay == None %}
+                <input name="checkinDay" type="text" class="form-control" id="datepicker1" placeholder="00/00/00"required>
+                {% else %}
+                <input name="checkinDay" type="text" class="form-control" id="datepicker1" value="{{checkinDay}}" required>
+                {% endif %}
+            </div>
+            <div class="form-group col-md-2">
+                <label for="check-inDay">Check Out day</label>
+                {% if checkinDay == None %}
+                <input name="checkoutDay" type="text" class="form-control" id="datepicker2" placeholder="00/00/00" required>
+                {% else %}
+                <input name="checkoutDay" type="text" class="form-control" id="datepicker2" value="{{checkoutDay}}" required>
+                {% endif %}
+            </div>
+            <div class="form-group col-auto " style="padding-top: 30px; padding-left: 10px;">
+                <button name="abc" id="button" type="submit" class="btn btn-primary mb-2">Search</button>
+            </div>
+          </div>
+
+        </form>
+        <div class="container " style="padding: 0px 60px">
+
+            <form id="form2" action="."  method="POST">
+              {% csrf_token %}
+              <div class="form-row" style="padding: 10px 0px">
+                  <div class="form-group col-md-12">
+                      <label for="Hotel">Choose your hotel</label>
+                      <select name = "hotel" id="hotel" class="form-control">
+                      <option selected>Choose...</option>
+                        {% for hotel in hotels %}
+                            {% if hotel.district == district %}
+                                <option value="{{hotel.name}}">{{hotel.name}}</option>
+                            {% else %}
+                            {% endif %}
+                        {% endfor %}
+                      </select>
+                  </div>
+              </div>
+      
+                <div class="form-row" style="padding: 10px 0px">
+                <div class="form-group col-md-3">
+                  <label for="Name">Your full Name</label>
+                  <input name="name" type="text" class="form-control" id="name" required>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="ID">ID</label>
+                  <input name="ID" type="text" class="form-control" id="ID" required>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="email">Email</label>
+                  <input name="email" type="text" class="form-control" id="email" required>
+                </div>
+                <div class="form-group col-md-3" >
+                  <label for="Phone">Phone number</label>
+                  <input name="phone" type="text" class="form-control" id="phone" required>
+                </div>
+              </div>
+              <div class="form-row" style="padding: 10px 0px">
+                  <div class="form-group col-md-12">
+                  <label for="inputAddress">Your current address</label>
+                  <input name="inputAddress" type="text" class="form-control" id="inputAddress" placeholder="123 Nguyen Canh Chan Street, 12 Wards, Distric 1, Ho Chi Minh City, Viet Nam" required>
+                  </div>
+                  <div class="form-group col-auto" style="padding-top: 0px;padding-left:847px">
+                    <button id="button2" type="submit" class="btn btn-primary mb-2">Confirmation</button>
+              </div>
+            </form>
+            
+{% endblock %}
