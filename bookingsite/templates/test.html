@@ -2,27 +2,28 @@
 {% extends '_homebase.html' %}
 {% block booking %}
 {% load static %}
-      <div class="text-center" style="padding-top: 20px;">
-      <img src="{% static '/' %}img/logo.jpeg"   alt="This is not displayed" width="80%">
-      </div>
+      <div style="background: linear-gradient(45deg, rgba(224,243,250,1) 0%,rgba(216,240,252,1) 50%,rgba(184,226,246,1) 51%,rgba(182,223,253,1) 100%); ">
+        <div class="text-center" style="padding-top: 20px;">
+        <img src="{% static '/' %}img/logo.jpeg"   alt="This is not displayed" width="80%">
+        </div>
       <div class="container" style="padding-top: 20px;">
         <form  id="form1"  method="GET">
             <div class="form-row">
                 <div class="form-group col-md-2">
-                <label for="People">Number of people</label>
-                {% if people == None %}
-                    <input name="people" type="text" class="form-control " id="people" placeholder="Enter numbers...">
-                {% else %}
-                    <input name="people" type="text" class="form-control " id="people" value="{{people}}">
-                {% endif %}
+                  <label for="People">Number of people</label>
+                  {% if people == None %}
+                      <input name="people" type="text" class="form-control " id="people" placeholder="Enter numbers...">
+                  {% else %}
+                      <input name="people" type="text" class="form-control " id="people" value="{{people}}">
+                  {% endif %}
                 </div>            
                 <div class="form-group col-md-2">
-                <label for="Room">Number of room</label>
-                {% if room == None %}
-                    <input name="room" type="text" class="form-control " id="room" placeholder="Enter numbers...">
-                {% else %}
-                    <input name="room" type="text" class="form-control " id="room" value="{{room}}">
-                {% endif %}
+                  <label for="Room">Number of room</label>
+                  {% if room == None %}
+                      <input name="room" type="text" class="form-control " id="room" placeholder="Enter numbers...">
+                  {% else %}
+                      <input name="room" type="text" class="form-control " id="room" value="{{room}}">
+                  {% endif %}
                 </div>
                 
                 <div class="form-group col-md-3">
@@ -43,25 +44,25 @@
                     <option value="District 8">District 8</option>
                 </select>
                 </div>
-            <div class="form-group col-md-2">
-                <label for="check-inDay">Check In day</label>
-                {% if checkinDay == None %}
-                <input name="checkinDay" type="text" class="form-control" id="datepicker1" placeholder="00/00/00"required>
-                {% else %}
-                <input name="checkinDay" type="text" class="form-control" id="datepicker1" value="{{checkinDay}}" required>
-                {% endif %}
-            </div>
-            <div class="form-group col-md-2">
-                <label for="check-inDay">Check Out day</label>
-                {% if checkinDay == None %}
-                <input name="checkoutDay" type="text" class="form-control" id="datepicker2" placeholder="00/00/00" required>
-                {% else %}
-                <input name="checkoutDay" type="text" class="form-control" id="datepicker2" value="{{checkoutDay}}" required>
-                {% endif %}
-            </div>
-            <div class="form-group col-auto " style="padding-top: 30px; padding-left: 10px;">
-                <button name="abc" id="button" type="submit" class="btn btn-primary mb-2">Search</button>
-            </div>
+                <div class="form-group col-md-2">
+                    <label for="check-inDay">Check In day</label>
+                    {% if checkinDay == None %}
+                    <input name="checkinDay" type="text" class="form-control" id="datepicker1" placeholder="00/00/00"required>
+                    {% else %}
+                    <input name="checkinDay" type="text" class="form-control" id="datepicker1" value="{{checkinDay}}" required>
+                    {% endif %}
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="check-inDay">Check Out day</label>
+                    {% if checkinDay == None %}
+                    <input name="checkoutDay" type="text" class="form-control" id="datepicker2" placeholder="00/00/00" required>
+                    {% else %}
+                    <input name="checkoutDay" type="text" class="form-control" id="datepicker2" value="{{checkoutDay}}" required>
+                    {% endif %}
+                </div>
+                <div class="form-group col-auto " style="padding-top: 30px; padding-left: 10px;">
+                    <button name="abc" id="button" type="submit" class="btn btn-primary mb-2">Search</button>
+                </div>
           </div>
 
         </form>
@@ -114,5 +115,6 @@
           </div>
         </div>
       </div>
-      
+    </div>
 {% endblock %}
+</div>
