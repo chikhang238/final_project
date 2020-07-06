@@ -60,7 +60,8 @@ def shop_cart_add(request,proid):
                 q1 = None
             form_1 = CartAddProductForm(request.POST)
             if q1 != None: # Update  quantity to exist product quantity
-                q1.quantity = q1.quantity + quantity
+                #q1.quantity = q1.quantity + quantity
+                q1.quantity = quantity
                 q1.save()
             elif form_1.is_valid() and form_1.cleaned_data['update']:
                 q1.quantity = int(form_1.cleaned_data['quantity'])
@@ -133,7 +134,6 @@ def shop_cart_checkout(request):
 
 @login_required(login_url='/login')
 def order_detail(request,id):
-
     order = Order.objects.get(pk=id)
     items = OrderDetail.objects.all().filter(order=id)
 

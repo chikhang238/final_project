@@ -6,11 +6,14 @@ from django.forms import ModelForm, TextInput
 
 from products.models import Product
 
+from .forms import CartAddProductForm
+
 
 class ShopCart(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     product = models.OneToOneField(Product, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField()
+    update_quantity_form = CartAddProductForm(initial={'quantity': quantity, 'update': True})
 
     def __str__(self):
         return self.product
