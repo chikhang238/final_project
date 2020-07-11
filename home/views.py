@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
-from home.forms import SignUpForm, UserUpdeteForm
+from home.forms import SignUpForm, UserUpdateForm
 from home.models import ContactForm, Contact, CommentForm, Comment
 from order.models import ShopCartForm, ShopCart
 from products.models import Category, Product, Images
