@@ -7,8 +7,7 @@ urlpatterns = [
     path('home', views.index, name='index'),
     path('contact', views.contact_form, name='contact'),
     path('kategoriler', views.show_category),
-    path('login', views.login_form),  # View de login adında bir fonkdiyon oluşturmayınız
-   # path('accounts/login/', views.login_form),  # View de login adında bir fonkdiyon oluşturmayınız
+    path('login', views.login_form),  
     path('join', views.user_signup,name='join'),
     path('logout', views.login_out),
     path('category/<int:catid>', views.category),

@@ -2,46 +2,6 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from bookingsite.models import Hotel,Customer
 from .form import CreateHotelForm,HomeForm,CreateBookingForm
-# Create your views here.
-# def homepage(request):
-#     a = request.POST.get('drop1')
-## lay gia tri dc cua droplist
-#     print(a)
-#     hotels = Hotel.objects.all().order_by('name')
-#     return render(request,'booking.html',{'hotels':hotels})
-
-# def homepage(request):
-#     return render(request,'booking.html',{})
-# class Homeview(TemplateView):
-#     template_name = 'test.html'
-#     def get(self,request):
-#         district = request.GET.get('people')
-#         #lay gia tri cua 1 tag co name= people
-#         form = CreateHotelForm()
-#         print(district)
-#         if request.GET :
-#             if(district != ""):
-#                 post = form.save(commit=False)
-#                 post.name = district
-#                 post.district = "a"
-#                 post.capacity = "a"
-#                 # tao 1 form theo boostrap
-#                 post.save()
-#         return render(request,self.template_name,{'district':district,'form':form})
-#     def post(self,request):
-#         form = CreateHotelForm(request.POST)
-#         post = form.save(commit=False)
-#         print("abc")
-#         post.name = "a"
-#         post.district = "a"
-#         post.capacity = "a"
-#         #tao 1 form theo boostrap
-#         post.save()
-#         text = form.cleaned_data['name']
-#         text1 = form.cleaned_data['district']
-#         args = {'form':form,'text':text,'text1':text1}
-#         return render(request,self.template_name,args)
-
 
 class Homeview(TemplateView):
     template_name = 'test.html'
@@ -63,7 +23,7 @@ class Homeview(TemplateView):
             args = {'people':people,'room':room,'district':district,'checkinDay':checkinDay,'checkoutDay':checkoutDay,
             'hotels':hotels
             }
-            return render(request,self.template_name,args) 
+            return render(request,self.template_name,args)
         return render(request,self.template_name,{})
     def post(self,request):
         if request.method =="POST":
@@ -94,8 +54,6 @@ class Homeview(TemplateView):
                 newBooking.hotel_name = hotel
                 newBooking.save()
             hotels = Hotel.objects.all().order_by('name')
-            # args = {
-            # 'hotels':hotels, 'name':name, 'ID':customer_id,'email':email,'phone':phone,'inputAddress':inputAddress
-            # }
+            
 
         return render(request,self.template_name,{})

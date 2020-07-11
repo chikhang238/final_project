@@ -212,13 +212,13 @@ def user_profile(request):
 @login_required(login_url='/login')
 def user_update(request):
     if request.method == 'POST':
-        form = UserUpdeteForm(request.POST, instance=request.user)
+        form = UserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             user = form.save()
             messages.success(request, 'Your Profile was successfully updated!')
             return HttpResponseRedirect('profile')
     else:
-        form = UserUpdeteForm(instance=request.user)
+        form = UserUpdateForm(instance=request.user)
     context = {'page': 'user',
                'form': form,
               }

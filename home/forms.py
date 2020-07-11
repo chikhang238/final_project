@@ -20,7 +20,7 @@ class SignUpForm(UserCreationForm):
         }
 
 
-class UserUpdeteForm(UserChangeForm):
+class UserUpdateForm(UserChangeForm):
     password = None
     class Meta:
         model = User
