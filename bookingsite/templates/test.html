@@ -19,13 +19,14 @@
           checkoutDay:$('#datepicker2').val(),
         },
         success:function(response){
+          
+          console.log(response.hotels)
           var myObj = JSON.parse(response.hotels)
-
           for (i = 0; i < myObj.length; i++) {
             $('#hotel').append(`<option value="${myObj[i].fields.name}"> 
                                        ${myObj[i].fields.name} 
                                   </option>`);
-
+            
             console.log(i)
           }
 
