@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
-from home.forms import SignUpForm, UserUpdeteForm
+from home.forms import SignUpForm, UserUpdateForm
 from home.models import ContactForm, Contact, CommentForm, Comment
 from order.models import ShopCartForm, ShopCart
 from products.models import Category, Product, Images
@@ -212,13 +212,13 @@ def user_profile(request):
 @login_required(login_url='/login')
 def user_update(request):
     if request.method == 'POST':
-        form = UserUpdeteForm(request.POST, instance=request.user)
+        form = UserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             user = form.save()
             messages.success(request, 'Your Profile was successfully updated!')
             return HttpResponseRedirect('profile')
     else:
-        form = UserUpdeteForm(instance=request.user)
+        form = UserUpdateForm(instance=request.user)
     context = {'page': 'user',
                'form': form,
               }
