@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from bookingsite.models import Hotel,Customer
 from .form import CreateHotelForm,HomeForm,CreateBookingForm
+from django.http import JsonResponse
+from django.core import serializers
+
 # Create your views here.
 # def homepage(request):
 #     a = request.POST.get('drop1')
@@ -47,7 +50,7 @@ class Homeview(TemplateView):
     template_name = 'test.html'
     temp_array = ["","","","",""]
     def get(self,request):
-        if request.method =="GET" :
+        if request.method =="GET" and request.is_ajax():
             people = request.GET.get('people')
             self.temp_array[0] = people
             room = request.GET.get('room')
@@ -58,12 +61,9 @@ class Homeview(TemplateView):
             self.temp_array[3] = checkinDay
             checkoutDay = request.GET.get('checkoutDay')
             self.temp_array[4] = checkoutDay
-            hotels = Hotel.objects.all().order_by('name')
             #lay gia tri cua 1 tag co name= people
-            args = {'people':people,'room':room,'district':district,'checkinDay':checkinDay,'checkoutDay':checkoutDay,
-            'hotels':hotels
-            }
-            return render(request,self.template_name,args) 
+            hotelData = serializers.serialize("json", Hotel.objects.filter(district = district))
+            return JsonResponse({"hotels": hotelData})
         return render(request,self.template_name,{})
     def post(self,request):
         if request.method =="POST":

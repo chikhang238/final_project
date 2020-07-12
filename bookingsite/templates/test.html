@@ -2,6 +2,39 @@
 {% extends '_homebase.html' %}
 {% block booking %}
 {% load static %}
+
+<script>
+  $(document).ready(function(){
+    $(document).on('submit','#form1',function(e){
+      e.preventDefault();
+      $.ajax({
+        type:'GET',
+        url:'',
+        datatype: 'json',
+        data:{
+          people:$('#people').val(),
+          room:$('#room').val(),
+          district:$('#district').val(),
+          checkinDay:$('#datepicker1').val(),
+          checkoutDay:$('#datepicker2').val(),
+        },
+        success:function(response){
+          var myObj = JSON.parse(response.hotels)
+
+          for (i = 0; i < myObj.length; i++) {
+            $('#hotel').append(`<option value="${myObj[i].fields.name}"> 
+                                       ${myObj[i].fields.name} 
+                                  </option>`);
+
+            console.log(i)
+          }
+
+
+        }
+      })
+    })
+  });
+</script>
       <div style="background: linear-gradient(45deg, rgba(224,243,250,1) 0%,rgba(216,240,252,1) 50%,rgba(184,226,246,1) 51%,rgba(182,223,253,1) 100%); ">
         <div class="text-center" style="padding-top: 20px;">
         <img src="{% static '/' %}img/logo.jpeg"   alt="This is not displayed" width="80%">
@@ -61,7 +94,7 @@
                     {% endif %}
                 </div>
                 <div class="form-group col-auto " style="padding-top: 30px; padding-left: 10px;">
-                    <button name="abc" id="button" type="submit" class="btn btn-primary mb-2">Search</button>
+                    <input value="Search" name="abc" id="button1" type="submit" class="btn btn-primary mb-2">
                 </div>
           </div>
 
@@ -75,12 +108,6 @@
                       <label for="Hotel">Choose your hotel</label>
                       <select name = "hotel" id="hotel" class="form-control">
                       <option selected>Choose...</option>
-                        {% for hotel in hotels %}
-                            {% if hotel.district == district %}
-                                <option value="{{hotel.name}}">{{hotel.name}}</option>
-                            {% else %}
-                            {% endif %}
-                        {% endfor %}
                       </select>
                   </div>
               </div>
@@ -109,12 +136,10 @@
                   <input name="inputAddress" type="text" class="form-control" id="inputAddress" placeholder="123 Nguyen Canh Chan Street, 12 Wards, Distric 1, Ho Chi Minh City, Viet Nam" required>
                   </div>
                   <div class="form-group col-auto" style="padding-top: 0px;padding-left:847px">
-                    <button id="button2" type="submit" class="btn btn-primary mb-2">Confirmation</button>
+                    <input value="Confirmation" id="button2" type="submit" class="btn btn-primary mb-2">
                   </div>
             </form>
           </div>
         </div>
       </div>
-    </div>
 {% endblock %}
-</div>
