@@ -5,37 +5,74 @@
 
 <script>
   $(document).ready(function(){
-    
+    var myObj = ""
+    $("#people").change(function(){
+      var num1 = parseInt($('#people').val())
+      if(Number.isInteger(num1) == false){
+        alert ("Please input correct amount of people!");
+      }
+    });
+    $("#phone").change(function(){
+      var num1 = parseInt($('#phone').val())
+      if(Number.isInteger(num1) == false){
+        alert ("Please input correct phone number!");
+      }
+    });
+    $("#room").change(function(){
+      var num2 = parseInt($('#room').val())
+      if(Number.isInteger(num2) == false){
+        alert ("Please input correct amount of room!");
+      }
+      this.empty()
+    });
     $(document).on('submit','#form1',function(e){
-      $("option").remove(".choose_hotel");
       e.preventDefault();
-      $.ajax({
-        type:'GET',
-        url:'',
-        datatype: 'json',
-        data:{
-          people:$('#people').val(),
-          room:$('#room').val(),
-          district:$('#district').val(),
-          checkinDay:$('#datepicker1').val(),
-          checkoutDay:$('#datepicker2').val(),
-        },
-        success:function(response){
-          
-          var myObj = JSON.parse(response.hotels)
-          for (i = 0; i < myObj.length; i++) {
-            $('#hotel').append(`<option class="choose_hotel" value="${myObj[i].fields.name}"> 
-                                       ${myObj[i].fields.name} 
-                                  </option>`);
+      $("option").remove(".choose_hotel");
+      var d1 = Date.parse($('#datepicker1').val());
+      var d2 = Date.parse($('#datepicker2').val());
+      var d3 = Date.parse(new Date())
+      
+      if (d1 > d2 || d1 < d3) {
+      alert ("Please input correct date!");
+      }
+      else{
+        $.ajax({
+          type:'GET',
+          url:'',
+          datatype: 'json',
+          data:{
+            people:$('#people').val(),
+            room:$('#room').val(),
+            district:$('#district').val(),
+            checkinDay:$('#datepicker1').val(),
+            checkoutDay:$('#datepicker2').val(),
+          },
+          success:function(response){
+            
+            
+          myObj = JSON.parse(response.hotels)
+            
+            for (i = 0; i < myObj.length; i++) {
+              $('#hotel').append(`<option class="choose_hotel" value="${myObj[i].fields.name}"> 
+                                        ${myObj[i].fields.name} 
+                                    </option>`);
+            }
+            $("#hotel").change( function() {
+              var temp = myObj.filter(x => x.fields.name === $("#hotel").val())
+              $('#information').html(`<p id="detail" >${temp[0].fields.description}<p>`)
+              var path = "../images/"+temp[0].fields.image
+              $('#image').html(`<img id="img" src=${path} class="img-fluid" >`)
+            });
           }
-          $("#hotel").change(function () {
-            var temp = myObj.filter(x => x.fields.name === $("#hotel").val())
-            $('#information').html(`<p>${temp[0].fields.description}<p>`)
-            var path = "../images/"+temp[0].fields.image
-            $('#image').html(`<img src=${path} class="img-fluid" >`)
-          });
-        }
-      })
+        })
+      }
+    });
+    
+    $("#form1").change(function() {
+      $("option").remove(".choose_hotel")
+      $('#information').empty()
+      $('#image').empty()
+      myObj = ""
     });
   });
   
@@ -49,29 +86,17 @@
             <div class="form-row">
                 <div class="form-group col-md-2">
                   <label for="People">Number of people</label>
-                  {% if people == None %}
                       <input name="people" type="text" class="form-control " id="people" placeholder="Enter numbers...">
-                  {% else %}
-                      <input name="people" type="text" class="form-control " id="people" value="{{people}}">
-                  {% endif %}
                 </div>            
                 <div class="form-group col-md-2">
                   <label for="Room">Number of room</label>
-                  {% if room == None %}
                       <input name="room" type="text" class="form-control " id="room" placeholder="Enter numbers...">
-                  {% else %}
-                      <input name="room" type="text" class="form-control " id="room" value="{{room}}">
-                  {% endif %}
                 </div>
                 
                 <div class="form-group col-md-3">
                 <label for="District">District</label>
                 <select name = "district" id="district" class="form-control">
-                    {% if room == None %}
                     <option selected>Choose...</option>
-                    {% else %}
-                    <option selected>{{district}}</option>
-                    {% endif %}
                     <option value="1">District 1</option>
                     <option value="2">District 2</option>
                     <option value="3">District 3</option>
@@ -84,19 +109,11 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label for="check-inDay">Check In day</label>
-                    {% if checkinDay == None %}
                     <input name="checkinDay" type="text" class="form-control" id="datepicker1" placeholder="00/00/00"required>
-                    {% else %}
-                    <input name="checkinDay" type="text" class="form-control" id="datepicker1" value="{{checkinDay}}" required>
-                    {% endif %}
                 </div>
                 <div class="form-group col-md-2">
                     <label for="check-inDay">Check Out day</label>
-                    {% if checkinDay == None %}
                     <input name="checkoutDay" type="text" class="form-control" id="datepicker2" placeholder="00/00/00" required>
-                    {% else %}
-                    <input name="checkoutDay" type="text" class="form-control" id="datepicker2" value="{{checkoutDay}}" required>
-                    {% endif %}
                 </div>
                 <div class="form-group col-auto " style="padding-top: 30px; padding-left: 10px;">
                     <input value="Search" name="abc" id="button1" type="submit" class="btn btn-primary mb-2">
@@ -105,7 +122,6 @@
 
         </form>
         <div class="container " style="padding: 0px 60px">
-
             <form id="form2" action="."  method="POST">
               {% csrf_token %}
               <div class="form-row" style="padding: 10px 0px">
@@ -119,10 +135,10 @@
               <div class="row no-gutters" style="padding: 0px 60px">
                 <div class="col-md-4" id="image">
                 </div>
-                <!-- <div class="col-md-auto" id="information" > -->
+                <div class="col-md-auto" id="information" >
                 </div>
               </div>
-                <div class="form-row" style="padding: 10px 0px">
+              <div class="form-row" style="padding: 10px 0px">
                 <div class="form-group col-md-3">
                   <label for="Name">Your full Name</label>
                   <input name="name" type="text" class="form-control" id="name" required>
