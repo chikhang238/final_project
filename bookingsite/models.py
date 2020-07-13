@@ -5,6 +5,8 @@ class Hotel(models.Model):
     name = models.TextField(max_length=100)
     district = models.TextField(max_length=100)
     capacity = models.TextField(max_length=100)
+    description = models.TextField(default="")
+    image = models.ImageField(blank = True, null = True,upload_to='images/')
     def __str__(self):
         return self.name
 

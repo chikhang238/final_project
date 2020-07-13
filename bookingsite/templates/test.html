@@ -5,7 +5,9 @@
 
 <script>
   $(document).ready(function(){
+    
     $(document).on('submit','#form1',function(e){
+      $("option").remove(".choose_hotel");
       e.preventDefault();
       $.ajax({
         type:'GET',
@@ -20,21 +22,23 @@
         },
         success:function(response){
           
-          console.log(response.hotels)
           var myObj = JSON.parse(response.hotels)
           for (i = 0; i < myObj.length; i++) {
-            $('#hotel').append(`<option value="${myObj[i].fields.name}"> 
+            $('#hotel').append(`<option class="choose_hotel" value="${myObj[i].fields.name}"> 
                                        ${myObj[i].fields.name} 
                                   </option>`);
-            
-            console.log(i)
           }
-
-
+          $("#hotel").change(function () {
+            var temp = myObj.filter(x => x.fields.name === $("#hotel").val())
+            $('#information').html(`<p>${temp[0].fields.description}<p>`)
+            var path = "../images/"+temp[0].fields.image
+            $('#image').html(`<img src=${path} class="img-fluid" >`)
+          });
         }
       })
-    })
+    });
   });
+  
 </script>
       <div style="background: linear-gradient(45deg, rgba(224,243,250,1) 0%,rgba(216,240,252,1) 50%,rgba(184,226,246,1) 51%,rgba(182,223,253,1) 100%); ">
         <div class="text-center" style="padding-top: 20px;">
@@ -107,12 +111,17 @@
               <div class="form-row" style="padding: 10px 0px">
                   <div class="form-group col-md-12">
                       <label for="Hotel">Choose your hotel</label>
-                      <select name = "hotel" id="hotel" class="form-control">
+                      <select name = "hotel" id="hotel" class="form-control" >
                       <option selected>Choose...</option>
                       </select>
                   </div>
               </div>
-      
+              <div class="row no-gutters" style="padding: 0px 60px">
+                <div class="col-md-4" id="image">
+                </div>
+                <!-- <div class="col-md-auto" id="information" > -->
+                </div>
+              </div>
                 <div class="form-row" style="padding: 10px 0px">
                 <div class="form-group col-md-3">
                   <label for="Name">Your full Name</label>
