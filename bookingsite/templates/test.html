@@ -23,7 +23,6 @@
       if(Number.isInteger(num2) == false){
         alert ("Please input correct amount of room!");
       }
-      this.empty()
     });
     $(document).on('submit','#form1',function(e){
       e.preventDefault();
@@ -86,11 +85,11 @@
             <div class="form-row">
                 <div class="form-group col-md-2">
                   <label for="People">Number of people</label>
-                      <input name="people" type="text" class="form-control " id="people" placeholder="Enter numbers...">
+                      <input name="people" type="text" class="form-control " id="people" placeholder="Enter numbers..." required>
                 </div>            
                 <div class="form-group col-md-2">
                   <label for="Room">Number of room</label>
-                      <input name="room" type="text" class="form-control " id="room" placeholder="Enter numbers...">
+                      <input name="room" type="text" class="form-control " id="room" placeholder="Enter numbers..." required>
                 </div>
                 
                 <div class="form-group col-md-3">

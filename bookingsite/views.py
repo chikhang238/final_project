@@ -47,7 +47,8 @@ from django.core import serializers
 
 
 class Homeview(TemplateView):
-    template_name = 'test.html'
+    template_name = 'booked.html'
+    template2_name = 'test.html'
     temp_array = ["","","","",""]
     def get(self,request):
         if request.method =="GET" and request.is_ajax():
@@ -63,7 +64,7 @@ class Homeview(TemplateView):
             self.temp_array[4] = checkoutDay
             hotelData = serializers.serialize("json", Hotel.objects.filter(district = district))
             return JsonResponse({"hotels": hotelData})
-        return render(request,self.template_name,{})
+        return render(request,self.template2_name,{})
     def post(self,request):
         if request.method =="POST":
             name = request.POST.get('name')
@@ -92,7 +93,9 @@ class Homeview(TemplateView):
                 newBooking.current_address = inputAddress
                 newBooking.hotel_name = hotel
                 newBooking.save()
-            hotels = Hotel.objects.all().order_by('name')
+            arg = {"people":people,"room":room,"district":district,"checkInDay":checkInDay,"checkOutDay":checkOutDay,"name":name,"id":customer_id,
+            "email":email,"phone":phone,"address":inputAddress,"hotel":hotel
+            }
             
 
-        return render(request,self.template_name,{})
+        return render(request,self.template2_name,{})
