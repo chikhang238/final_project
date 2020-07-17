@@ -1,94 +1,94 @@
-{% extends "_homebase.html" %}
-{% load static %}
-{% block title %} Chec kOut Page{% endblock %}
-{% block body %}
+{% extends "_homebase.html" %} {% load static %} {% block title %} Chec kOut Page{% endblock %} {% block body %}
 
-    <!-- BREADCRUMB -->
-    <div id="breadcrumb">
-        <div class="container">
-            <ul class="breadcrumb">
-                <li><a href="/">Home</a></li>
-                <li class="active">CheckOut</li>
-            </ul>
-        </div>
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">CheckOut</li>
+        </ul>
     </div>
-    <!-- /BREADCRUMB -->
+</div>
+<!-- /BREADCRUMB -->
 
-    <div class="section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
+<div class="section" style="background:  rgba(224,243,250,1) 0% ">
+    <!-- container -->
+    <div class="container">
+        <div class="text-center" style="padding-bottom: 20px; ">
+            <img src="{% static '/' %}img/sale_banner.jpg" alt="This is not displayed" width="80% ">
+        </div>
+        <!-- row -->
+        <div class="row">
 
-                <div class="col-md-2">
+            <div class="col-md-2">
+                <div class="billing-details">
+                    {% include 'user_menu.html' %}
+                </div>
+            </div>
+
+            <form id="checkout-form" name="order" class="clearfix" method="post">
+                <div class="col-md-4">
                     <div class="billing-details">
-                        {% include 'user_menu.html' %}
+                        {% csrf_token %}
+                        <div class="section-title">
+                            <h3 class="title">Order Details</h3>
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="name" placeholder="First Name" required id="id_name" value="{{ user.first_name }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="surname" placeholder="Last Name" required id="id_surname" value="{{ user.last_name }}">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="input" type="text" name="address" placeholder="Address" required id="id_address">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="city" placeholder="City" required id="id_city">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="tel" name="phone" placeholder="Telephone" required id="id_phone">
+                        </div>
                     </div>
                 </div>
 
-                <form id="checkout-form" name="order" class="clearfix" method="post">
-                    <div class="col-md-4">
-                        <div class="billing-details">
-                            {% csrf_token %}
-                            <div class="section-title">
-                                <h3 class="title">Order Details</h3>
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="name" placeholder="First Name" required id="id_name" value="{{ user.first_name }}">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="surname" placeholder="Last Name" required id="id_surname" value="{{ user.last_name }}">
-                            </div>
+                <div class="col-md-4">
+                    <div class="billing-details">
 
-                            <div class="form-group">
-                                <input class="input" type="text" name="address" placeholder="Address" required id="id_address">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="city" placeholder="City" required id="id_city">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="tel" name="phone" placeholder="Telephone" required id="id_phone">
-                            </div>
+                        <div class="section-title">
+                            <h3 class="title">Billing Details</h3>
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="first-name" placeholder="Card Holder Name">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="last-name" placeholder="Card Number">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="email" name="email" placeholder="Date mm/yy">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="address" placeholder="Code">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="address" value="Order Total : ${{ carttotal }}" readonly>
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" class="primary-btn">Complete Order</button>
                         </div>
                     </div>
+                </div>
 
-                     <div class="col-md-4">
-                        <div class="billing-details">
+            </form>
+        </div>
 
-                            <div class="section-title">
-                                <h3 class="title">Billing Details</h3>
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="first-name" placeholder="Card Holder Name">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="last-name" placeholder="Card Number">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="email" name="email" placeholder="Date mm/yy">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="address" placeholder="Code">
-                            </div>
-                             <div class="form-group">
-                                <input class="input" type="text" name="address" value="Order Total : ${{ carttotal }}" readonly>
-                            </div>
-                            <div class="pull-right">
-                                <button type="submit" class="primary-btn">Complete Order</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-
-            <div class="row">
-                <div class="order-summary clearfix">
-                    <div class="section-title">
-                        <h3 class="title">Order Review</h3>
-                    </div>
-                    <table class="shopping-cart-table table">
-                        <thead>
+        <div class="row">
+            <div class="order-summary clearfix">
+                <div class="section-title">
+                    <h3 class="title">Order Review</h3>
+                </div>
+                <table class="shopping-cart-table table">
+                    <thead>
                         <tr>
                             <th>Product</th>
                             <th></th>
@@ -97,26 +97,26 @@
                             <th class="text-center">Total</th>
                             <th class="text-right"></th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    </thead>
+                    <tbody>
                         {% for rs in shopcart %}
-                            <tr>
-                                <td class="thumb"><img src="{{ rs.product.image.url }}" alt=""></td>
-                                <td class="details">
-                                    <a href="#">{{ rs.product.name }}</a>
+                        <tr>
+                            <td class="thumb"><img src="{{ rs.product.image.url }}" alt=""></td>
+                            <td class="details">
+                                <a href="#">{{ rs.product.name }}</a>
 
-                                </td>
-                                <td class="price text-center"><strong>$ {{ rs.product.price }}</strong></td>
-                                <td class="qty text-center"><strong>{{ rs.quantity }}</strong></td>
-                                <td class="total text-center"><strong class="primary-color">$ {{ rs.amount }}</strong></td>
-                                <td class="text-right"></td>
-                            </tr>
+                            </td>
+                            <td class="price text-center"><strong>$ {{ rs.product.price }}</strong></td>
+                            <td class="qty text-center"><strong>{{ rs.quantity }}</strong></td>
+                            <td class="total text-center"><strong class="primary-color">$ {{ rs.amount }}</strong></td>
+                            <td class="text-right"></td>
+                        </tr>
                         {% endfor %}
 
 
 
-                        </tbody>
-                        <tfoot>
+                    </tbody>
+                    <tfoot>
                         <tr>
                             <th class="empty" colspan="3"></th>
                             <th>SUBTOTAL</th>
@@ -132,20 +132,20 @@
                             <th>TOTAL</th>
                             <th colspan="2" class="total">${{ carttotal }} </th>
                         </tr>
-                        </tfoot>
-                    </table>
-
-                </div>
-
-
-
-
-
+                    </tfoot>
+                </table>
 
             </div>
-            <!-- /row -->
+
+
+
+
+
+
         </div>
-        <!-- /container -->
+        <!-- /row -->
     </div>
+    <!-- /container -->
+</div>
 
 {% endblock %}

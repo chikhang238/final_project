@@ -70,7 +70,7 @@ def shop_cart_add(request,proid):
                 data = ShopCart(user_id=current_user.id, product_id=proid, quantity=quantity)
                 data.save()
             request.session['cart_items'] = ShopCart.objects.filter(user_id=current_user.id).count() #Count item in shop cart
-            messages.success(request, "Product added to cart.. ")
+            messages.success(request, "Your cart has been updated")
             return HttpResponseRedirect(url)
 
     return HttpResponseRedirect(reverse('product', args=[proid]))
@@ -79,7 +79,7 @@ def shop_cart_add(request,proid):
 def shop_cart_delete(request,id):
     url = request.META.get('HTTP_REFERER')  # Bir önceki adresi alır
     ShopCart.objects.filter(id=id).delete()
-    messages.success(request, "Product deleted from  cart.. ")
+    messages.success(request, "Products have been deleted from your cart")
     return HttpResponseRedirect(url)
 
 @login_required(login_url='/login')
